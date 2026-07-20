@@ -2,10 +2,12 @@
 
 [Português do Brasil](README.pt-BR.md)
 
-Open CAN Analyzer is an open-source desktop application for receiving, inspecting,
-transmitting, recording, decoding and replaying Classical CAN traffic through a serial USB
-adapter that implements the documented OCA text protocol. The application is written in
-Python/Tkinter and targets Windows, Linux and macOS.
+![Open CAN Analyzer receiving and transmitting CAN frames on macOS](docs/images/oca-macos-live.png)
+
+Open CAN Analyzer is an open-source desktop and firmware project for receiving, inspecting,
+transmitting, recording, decoding and replaying Classical CAN traffic. The cross-platform
+Python/Tkinter application communicates over USB CDC with the included Infineon XMC4700
+firmware, or with another adapter that implements the documented OCA text protocol.
 
 OCA is an educational and bench-development tool. It is not a safety-certified diagnostic
 product, a vehicle repair authority, or a direct replacement for a commercial validation
@@ -27,10 +29,25 @@ suite. Current desktop version: **0.4.0**.
 
 ## Hardware and protocol
 
-OCA requires a serial USB CAN adapter or firmware implementation that speaks the ASCII,
-line-oriented protocol in [docs/PROTOCOL.md](docs/PROTOCOL.md). The repository does not
-contain or require a particular microcontroller firmware. A compatible device normally
-provides:
+The repository includes a complete DAVE 4 project for the **KIT_XMC47_RELAX_V1** under
+[`firmware/CAN_Analyzer_XMC4700_Relax`](firmware/CAN_Analyzer_XMC4700_Relax). The tested kit
+uses an XMC4700 ARM Cortex-M4 microcontroller with 2,048 kB Flash and 352 kB data memory. The
+board also provides an on-board J-Link debug probe, USB, an IFX1051LE high-speed CAN
+transceiver, Ethernet, microSD and expansion headers. See the
+[official Infineon board manual](https://www.infineon.com/assets/row/public/documents/30/44/infineon-board-user-manual-xmc4700-xmc4800-relax-kit-series-usermanual-en.pdf)
+and [kit product page](https://www.infineon.com/evaluation-board/KIT-XMC47-RELAX-V1).
+
+<p align="center">
+  <img src="docs/images/xmc4700-relax-kit.jpg" width="520" alt="XMC4700 Relax Kit running the OCA firmware">
+</p>
+
+The included firmware is configured for 500 kbit/s Classical CAN, standard 11-bit IDs,
+`CANH` on X2.33 and `CANL` on X2.35. The kit has no on-board 120-ohm CAN termination;
+terminate the bus externally as required. Connect a common reference when required by the
+bench setup and read [docs/SAFETY.md](docs/SAFETY.md) before transmitting.
+
+OCA can also use another serial USB CAN adapter that speaks the ASCII, line-oriented protocol
+in [docs/PROTOCOL.md](docs/PROTOCOL.md). A compatible device normally provides:
 
 - a USB CDC/virtual serial port;
 - a Classical CAN controller and appropriate transceiver;
@@ -41,6 +58,16 @@ The current protocol supports standard 11-bit IDs only. A typical received frame
 
 ```text
 RX2,1234,101,8,10,20,30,40,50,60,70,80
+```
+
+## Repository layout
+
+```text
+oca/                                      Desktop protocol and support package
+can_analyzer_gui.py                       Cross-platform desktop GUI
+firmware/CAN_Analyzer_XMC4700_Relax/     Standalone Infineon DAVE 4 firmware project
+profiles/ and examples/                   Public profiles, CSV and DBC examples
+docs/                                     Protocol, safety, build and driver documentation
 ```
 
 ## Install and run
@@ -61,6 +88,14 @@ Optional DBC support:
 ```bash
 python -m pip install -r requirements-dbc.txt
 ```
+
+## Build and flash the XMC4700 firmware
+
+Import `firmware/CAN_Analyzer_XMC4700_Relax` into an Infineon DAVE 4 workspace as an existing
+project, generate code if needed, build the **Debug** configuration and flash the XMC4700
+through the kit's on-board J-Link probe. Connect the application USB port X100 to expose the
+OCA USB CDC serial interface. Detailed settings, connections and build steps are in the
+[firmware README](firmware/CAN_Analyzer_XMC4700_Relax/README.md).
 
 Launchers are also provided:
 
@@ -167,4 +202,6 @@ Windows, Ubuntu and macOS.
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md),
 [SECURITY.md](SECURITY.md) and [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). Sanitize captures
-and never submit proprietary DBC data. Open CAN Analyzer is released under the [MIT License](LICENSE).
+and never submit proprietary DBC data. Original OCA code is released under the
+[MIT License](LICENSE). DAVE-generated, XMCLib, CMSIS and USB components retain their upstream
+notices; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

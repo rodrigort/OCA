@@ -15,6 +15,9 @@ All notable changes are documented here. OCA follows Semantic Versioning.
 - Added complete community, security, architecture, profile, DBC, build and safety documentation.
 - Improved macOS dark-theme colors, widened serial-port selection and screen-aware window sizing.
 - Added an official-source Windows driver guide for the XMC4700 Relax Kit on-board J-Link probe.
+- Added the complete, standalone XMC4700 DAVE 4 firmware project without generated build output.
+- Added verified macOS traffic and XMC4700 hardware photos to the public documentation.
+- Added official kit specifications, CAN pin mapping, termination guidance and third-party notices.
 
 ## [0.3.0] - 2026-07-20
 

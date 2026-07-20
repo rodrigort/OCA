@@ -2,10 +2,12 @@
 
 [English](README.md)
 
-Open CAN Analyzer é uma aplicação desktop open source para receber, inspecionar, transmitir,
-gravar, decodificar e reproduzir tráfego Classical CAN por meio de um adaptador serial USB
-compatível com o protocolo textual OCA. A aplicação usa Python/Tkinter e funciona em Windows,
-Linux e macOS.
+![Open CAN Analyzer recebendo e transmitindo frames CAN no macOS](docs/images/oca-macos-live.png)
+
+Open CAN Analyzer é um projeto open source de aplicação desktop e firmware para receber,
+inspecionar, transmitir, gravar, decodificar e reproduzir tráfego Classical CAN. A aplicação
+Python/Tkinter funciona em Windows, Linux e macOS e se comunica por USB CDC com o firmware
+XMC4700 incluído ou com outro adaptador compatível com o protocolo textual OCA.
 
 OCA é uma ferramenta educacional e de desenvolvimento em bancada. Não é um produto de
 diagnóstico certificado, uma autoridade para reparo veicular nem substituto direto de uma
@@ -27,16 +29,41 @@ suíte comercial de validação. Versão atual: **0.4.0**.
 
 ## Hardware e protocolo
 
-É necessário um adaptador CAN serial USB que implemente o protocolo ASCII documentado em
-[docs/PROTOCOL.md](docs/PROTOCOL.md). Este repositório desktop não contém nem depende de um
-firmware específico. O hardware normalmente precisa de USB CDC/porta serial virtual,
-controlador e transceiver CAN, CANH/CANL, referência comum quando necessária, bitrate correto,
-terminação e proteção elétrica adequadas.
+O repositório inclui um projeto DAVE 4 completo para a **KIT_XMC47_RELAX_V1** em
+[`firmware/CAN_Analyzer_XMC4700_Relax`](firmware/CAN_Analyzer_XMC4700_Relax). O kit testado
+usa um XMC4700 ARM Cortex-M4 com 2.048 kB de Flash e 352 kB de memória de dados. A placa também
+possui depurador J-Link integrado, USB, transceiver CAN de alta velocidade IFX1051LE,
+Ethernet, microSD e conectores de expansão. Consulte o
+[manual oficial da Infineon](https://www.infineon.com/assets/row/public/documents/30/44/infineon-board-user-manual-xmc4700-xmc4800-relax-kit-series-usermanual-en.pdf)
+e a [página oficial do kit](https://www.infineon.com/evaluation-board/KIT-XMC47-RELAX-V1).
+
+<p align="center">
+  <img src="docs/images/xmc4700-relax-kit.jpg" width="520" alt="XMC4700 Relax Kit executando o firmware OCA">
+</p>
+
+O firmware incluído está configurado para Classical CAN a 500 kbit/s, IDs padrão de 11 bits,
+`CANH` em X2.33 e `CANL` em X2.35. O kit não possui terminação CAN de 120 ohms integrada;
+instale a terminação externa adequada. Use uma referência comum quando a bancada exigir e
+leia [docs/SAFETY.md](docs/SAFETY.md) antes de transmitir.
+
+Também é possível usar outro adaptador CAN serial USB que implemente o protocolo ASCII de
+[docs/PROTOCOL.md](docs/PROTOCOL.md). O hardware precisa oferecer USB CDC/porta serial virtual,
+controlador e transceiver CAN, CANH/CANL, bitrate, terminação e proteção elétrica adequados.
 
 O protocolo atual aceita apenas IDs padrão de 11 bits. Exemplo:
 
 ```text
 RX2,1234,101,8,10,20,30,40,50,60,70,80
+```
+
+## Estrutura do repositório
+
+```text
+oca/                                      Pacote de protocolo e suporte desktop
+can_analyzer_gui.py                       Interface desktop multiplataforma
+firmware/CAN_Analyzer_XMC4700_Relax/     Projeto de firmware independente para DAVE 4
+profiles/ e examples/                     Perfis e exemplos públicos de CSV e DBC
+docs/                                     Protocolo, segurança, build e drivers
 ```
 
 ## Instalação e execução
@@ -56,6 +83,14 @@ Suporte DBC opcional:
 ```bash
 python -m pip install -r requirements-dbc.txt
 ```
+
+## Compilar e gravar o firmware XMC4700
+
+Importe `firmware/CAN_Analyzer_XMC4700_Relax` em um workspace do Infineon DAVE 4 como projeto
+existente, gere o código se necessário, compile a configuração **Debug** e grave o XMC4700
+pelo J-Link integrado do kit. Conecte a porta USB de aplicação X100 para disponibilizar a
+interface serial USB CDC do OCA. As configurações, ligações e etapas completas estão no
+[README do firmware](firmware/CAN_Analyzer_XMC4700_Relax/README.md).
 
 No Windows, use `executar_can_analyzer_gui.bat`. No Linux/macOS, use
 `./run_can_analyzer_gui.sh`. Para o terminal:
@@ -135,4 +170,6 @@ editor de perfis mais completo, releases reproduzíveis e novas traduções.
 
 Para contribuir, leia [CONTRIBUTING.md](CONTRIBUTING.md),
 [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), [SECURITY.md](SECURITY.md) e
-[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). O projeto usa a [licença MIT](LICENSE).
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). O código original do OCA usa a
+[licença MIT](LICENSE). Componentes DAVE, XMCLib, CMSIS e USB preservam suas licenças de
+origem; consulte [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

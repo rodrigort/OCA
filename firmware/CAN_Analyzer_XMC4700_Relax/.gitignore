@@ -1,0 +1,9 @@
+Debug/
+Release/
+*.elf
+*.hex
+*.map
+*.o
+*.d
+*.su
+Dave/Model/RestoreDB.data

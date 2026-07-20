@@ -17,6 +17,14 @@ dist/
 *.egg-info/
 *.spec
 
+# Firmware build output
+firmware/**/Debug/
+firmware/**/Release/
+firmware/**/*.elf
+firmware/**/*.hex
+firmware/**/*.map
+firmware/**/*.o
+
 # Editors and operating systems
 .idea/
 .vscode/
@@ -36,4 +44,3 @@ logs/
 *.dbc
 !examples/*.csv
 !examples/*.dbc
-

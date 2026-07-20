@@ -28,7 +28,7 @@ EXCLUDED_PARTS = {
     "logs",
     "venv",
 }
-EXCLUDED_NAMES = {".coverage", ".DS_Store", ".portable", "config.json", "Thumbs.db"}
+EXCLUDED_NAMES = {".coverage", ".DS_Store", ".portable", "config.json", "RestoreDB.data", "Thumbs.db"}
 EXCLUDED_SUFFIXES = {".egg-info", ".log", ".pyc", ".pyo", ".spec", "~"}
 
 
@@ -60,6 +60,10 @@ def main() -> None:
         ROOT / "oca" / "__init__.py",
         ROOT / "oca" / "config.py",
         ROOT / "oca" / "i18n.py",
+        ROOT / "docs" / "images" / "oca-macos-live.png",
+        ROOT / "docs" / "images" / "xmc4700-relax-kit.jpg",
+        ROOT / "firmware" / "CAN_Analyzer_XMC4700_Relax" / ".project",
+        ROOT / "firmware" / "CAN_Analyzer_XMC4700_Relax" / "main.c",
     ]
     missing = [str(path.relative_to(ROOT)) for path in required if not path.is_file()]
     if missing:
