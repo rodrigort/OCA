@@ -93,6 +93,8 @@ def main():
     for path in ROOT.rglob("*"):
         if not path.is_file() or any(part in {".git", "dist", "logs", "__pycache__"} for part in path.parts):
             continue
+        if path.resolve() == Path(__file__).resolve():
+            continue
         content = path.read_bytes()
         if any(marker.lower() in content.lower() for marker in private_markers):
             private_hits.append(str(path.relative_to(ROOT)))
