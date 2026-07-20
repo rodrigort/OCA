@@ -1,0 +1,21 @@
+{
+  "language": "auto",
+  "port": "",
+  "baud": "115200",
+  "filter": "",
+  "search": "",
+  "direction_filter": "ALL",
+  "autoscroll": true,
+  "pause_view": false,
+  "auto_response": false,
+  "listen_only": true,
+  "graph_id": "",
+  "graph_signal": "B0",
+  "graph_window": 10.0,
+  "graph_auto_scale": true,
+  "profile_path": "profiles/generic.json",
+  "geometry": "1360x800",
+  "tx_slot_count": 1,
+  "selected_tx_slot": 0,
+  "tx_slots": []
+}

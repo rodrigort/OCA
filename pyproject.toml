@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "open-can-analyzer"
+version = "0.4.0"
+description = "Open desktop analyzer for CAN hardware using the OCA serial protocol"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {file = "LICENSE"}
+authors = [{name = "Open CAN Analyzer contributors"}]
+dependencies = ["pyserial>=3.5"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Operating System :: Microsoft :: Windows",
+  "Operating System :: POSIX :: Linux",
+  "Operating System :: MacOS",
+]
+keywords = ["CAN", "CAN bus", "DBC", "serial", "analyzer", "Tkinter"]
+
+[project.optional-dependencies]
+dbc = ["cantools>=39.0"]
+dev = ["cantools>=39.0", "pyinstaller>=6.0", "build>=1.2"]
+
+[project.gui-scripts]
+open-can-analyzer = "can_analyzer_gui:main"
+
+[project.scripts]
+oca-terminal = "can_analyzer_serial:main"
+
+[tool.setuptools]
+py-modules = ["can_analyzer_gui", "can_analyzer_serial"]
+
+[tool.setuptools.packages.find]
+include = ["oca*"]
+
+[tool.setuptools.data-files]
+"share/open-can-analyzer/locales" = ["locales/*.json"]
+"share/open-can-analyzer/profiles" = ["profiles/*.json"]
+"share/open-can-analyzer/examples" = ["examples/*.csv", "examples/*.dbc"]

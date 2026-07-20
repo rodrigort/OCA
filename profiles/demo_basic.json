@@ -1,0 +1,44 @@
+{
+  "profile_name": "Demo Basic CAN",
+  "baudrate_can": 500000,
+  "ids": {
+    "0x101": "Demo node A request",
+    "0x201": "Demo node A response",
+    "0x301": "Demo node B request",
+    "0x351": "Demo node B response"
+  },
+  "auto_responses": [
+    {
+      "enabled": true,
+      "rx_id": "0x101",
+      "tx_id": "0x201",
+      "dlc": 8,
+      "data": ["0x11", "0x22", "0x33", "0x44", "0x55", "0x66", "0x77", "0x88"],
+      "description": "Automatic demo response A"
+    },
+    {
+      "enabled": true,
+      "rx_id": "0x301",
+      "tx_id": "0x351",
+      "dlc": 8,
+      "data": ["0xAA", "0xBB", "0xCC", "0xDD", "0xEE", "0xFF", "0x12", "0x34"],
+      "description": "Automatic demo response B"
+    }
+  ],
+  "quick_tx": [
+    {
+      "label": "Send 0x201",
+      "tx_id": "0x201",
+      "dlc": 8,
+      "data": ["0x11", "0x22", "0x33", "0x44", "0x55", "0x66", "0x77", "0x88"],
+      "description": "Manual demo response A"
+    },
+    {
+      "label": "Send 0x351",
+      "tx_id": "0x351",
+      "dlc": 8,
+      "data": ["0xAA", "0xBB", "0xCC", "0xDD", "0xEE", "0xFF", "0x12", "0x34"],
+      "description": "Manual demo response B"
+    }
+  ]
+}

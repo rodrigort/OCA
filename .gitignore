@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environments
+.venv/
+venv/
+env/
+
+# Packaging
+build/
+dist/
+*.egg-info/
+*.spec
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*~
+
+# Runtime and user data
+config.json
+.portable
+logs/
+*.log
+
+# CAN captures and databases are ignored by default to prevent accidental leaks.
+# Curated public examples under examples/ are explicitly allowed.
+*.csv
+*.dbc
+!examples/*.csv
+!examples/*.dbc
+

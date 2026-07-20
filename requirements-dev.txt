@@ -1,0 +1,3 @@
+-r requirements-dbc.txt
+pyinstaller>=6.0
+build>=1.2

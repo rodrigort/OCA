@@ -1,0 +1,15 @@
+{
+  "profile_name": "Generic CAN",
+  "baudrate_can": 500000,
+  "ids": {},
+  "auto_responses": [],
+  "quick_tx": [
+    {
+      "label": "TX 0x100",
+      "tx_id": "0x100",
+      "dlc": 8,
+      "data": ["0x00", "0x11", "0x22", "0x33", "0x44", "0x55", "0x66", "0x77"],
+      "description": "Generic test frame"
+    }
+  ]
+}

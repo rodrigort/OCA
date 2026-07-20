@@ -1,0 +1,3 @@
+-r requirements.txt
+cantools>=39.0
+
